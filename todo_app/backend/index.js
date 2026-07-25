@@ -18,7 +18,7 @@ function updateTodo(oldTodo, newTodo) {
   });
   filteredArr.splice(index, 0, newTodo);
   todoArr = filteredArr;
-}
+}   
 
 app.get("/todo", (response, request) => {
   response.json({
@@ -61,7 +61,7 @@ app.delete("/todo", (response, request) => {
   });
 });
 
-const PORT = 8080;
+const PORT = 8081;
 app.listen(PORT, () => {
   console.log("server running at port: ", PORT);
 });
