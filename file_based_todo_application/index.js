@@ -51,6 +51,22 @@ app.put("/todo",(req,res)=>{
   })
 })
 
+app.delete("/todo", (req, res) => {
+  const { todo } = req.body;
+
+  let filteredArray = todoArr.filter((elem) => {
+    if (elem === todo) {
+      return false;
+    } else {
+      return true;
+    }
+  });
+
+  fs.writeFileSync(filePath, JSON.stringify(filteredArray), "utf-8");
+
+  res.json({ msg: "todo deleted successfully" });
+});
+
 app.listen("8080", () => {
   console.log("server is running");
 });
