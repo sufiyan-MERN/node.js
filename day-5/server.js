@@ -5,6 +5,26 @@ app.use(express.json());
 
 let users = [];
 
+function authmiddleware(req, res, next) {
+  const { token } = req.header;
+
+  let foundUser = null;
+  foundUser = users.find((user) => {
+    if (user.token == token) {
+      return true;
+    }
+  });
+
+  if (foundUser) {
+    req.user = foundUser;
+    next();
+  } else {
+    res.json({
+      msg: "not allowed to access protected data",
+    });
+  }
+}
+
 const generateToken = () => {
   let options = [
     "a",
@@ -116,6 +136,15 @@ app.post("/singin", (req, res) => {
       msg: "invalid email or password",
     });
   }
+});
+
+app.use(authmiddleware);
+
+app.get("/me", (req, res) => {
+  const foundUser = req.user;
+  res.json({
+    data: foundUser,
+  });
 });
 
 const PORT = "8080";
