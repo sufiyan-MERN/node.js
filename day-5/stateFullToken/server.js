@@ -143,7 +143,7 @@ app.use(authmiddleware);
 app.get("/me", (req, res) => {
   const foundUser = req.user;
   res.json({
-    data: foundUser,
+    data: foundUser,    
   });
 });
 

@@ -21,7 +21,7 @@ const filePath = path.join(__dirname, "example.txt");
 //   console.log("data added");
 // });
 
-fs.writeFileSync(filePath, "hello india", "utf8");
+// fs.writeFileSync(filePath, "hello india", "utf8");
 
 const oldData = fs.readFileSync(filePath, "utf8");
 const newData = oldData + " iam from UAE";

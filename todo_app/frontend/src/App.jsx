@@ -7,7 +7,7 @@ function App() {
   const todoList = useFetchTodo();
 
   async function submit() {
-    const response = await fetch("http://localhost:8081/todo", {
+    const response = await fetch("http://localhost:8080npm/todo", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,6 +38,7 @@ function App() {
       >
         add todo
       </button>
+      <TodoBox />
 
       {/* {todoList.map((todo) => {
         <TodoBox details={todo} key={todo} />;
