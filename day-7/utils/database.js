@@ -3,25 +3,25 @@ const Schema=mongoose.Schema
 
 const ObjectId=Schema.ObjectId
 
-const todoSchema=new Schema({
+const TodoSchema=new Schema({
     title:String,
     description:String,
     isDone:Boolean,
     userId:ObjectId
 })
 
-const userSchema=new Schema({
+const UserSchema=new Schema({
     username:String,
     email:String,
     password:String,
 })
 
 
-const todoModel=mongoose.model("todos",todoSchema)
-const userModel=mongoose.model("user",userSchema)
+const TodoModel=mongoose.model("todos",TodoSchema)
+const UserModel=mongoose.model("users",UserSchema)
 
 
-module.exports({
-    todoModel,
-    userModel
+module.exports=({
+    TodoModel,
+    UserModel
 })
