@@ -21,7 +21,7 @@ const TodoModel=mongoose.model("todos",TodoSchema)
 const UserModel=mongoose.model("users",UserSchema)
 
 
-module.exports=({
+module.exports={
     TodoModel,
     UserModel
-})
+}
