@@ -3,14 +3,14 @@ dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 const express = require("express");
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");    
 const dotenv = require("dotenv");
 const { UserModel, TodoModel } = require("./utils/database");
 const authMiddleWare = require("./Middleware/authMiddleware");
 const bcrypt=require("bcrypt")
 const {z}=require("zod")
 
-const app = express();
+const app = express();  
 app.use(express.json());
 
 dotenv.config();
@@ -47,13 +47,24 @@ app.post("/signup", async (req, res) => {
 
   })
 
+  const parsedData=requireBodySchema.safeParse(req.body)
+
+  if(!parsedData.success){
+   res.json({
+      message: "Invalid format",
+      error: parsedData.error.message
+    });
+    return;
+ }
 
   const { username, email, password } = req.body;
+
+  const hashedPassword=await bcrypt.hash(password,5)
 
   const feedback = await UserModel.create({
     username,
     email,
-    password,
+    password:hashedPassword
   });
 
   res.json({
@@ -66,9 +77,11 @@ app.post("/signin", async (req, res) => {
   const { email, password } = req.body;
   const foundUser = await UserModel.find({
     email: email,
-    password: password,
   });
-  if (foundUser != undefined) {
+
+const passwordMatch= await bcrypt.compare(password,foundUser[0].password)
+
+  if (passwordMatch) {
     const token = jwt.sign(
       { id: foundUser[0]._id.toString() },
       process.env.JWT_SECRET,
